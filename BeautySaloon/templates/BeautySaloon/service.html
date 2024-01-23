@@ -8,14 +8,6 @@
 	<link rel="stylesheet" href="{% static 'BeautySaloon/css/air-datepicker.css' %}">
 	<script src="{% static 'BeautySaloon/js/air-datepicker.js' %}"></script>
 	<link rel="stylesheet" href="{% static 'BeautySaloon/css/main.css' %}">
-
-
-{% endblock %}
-
-{% block section %}
-{% endblock %}
-
-{% block header %}
 {% endblock %}
 
 {% block content %}
@@ -31,12 +23,6 @@
 				</div>
 				
 				<form action="#" class="service__form">
-					<!-- <select name="selectSalon" id="" class="service__form_select">
-						<option value="" selected>(Выберите салон)</option>
-						<option value="salon1" >Салон 1</option>
-						<option value="salon2" >Салон 2</option>
-						<option value="salon3" >Салон 3</option>
-					</select> -->
 					<div class="service__form_block service__salons">
 						<button class="accordion">(Выберите салон)</button>
 						<div class="panel">
@@ -59,20 +45,17 @@
 						<div class="panel">
 							<button class="accordion">Парикмахерские услуги</button>
 						 	<div class="panel">
-							  
-							  	<!-- <div class="accordion__block_intro">Макияж</div> -->
-							  		<div class="accordion__block_items">
-							  			<div class="accordion__block_item fic">
-							  				<div class="accordion__block_item_intro">Окрашивание волос</div>
-									  		<div class="accordion__block_item_address">5 000 ₽</div>
-							  			</div>
+                                <div class="accordion__block_items">
+                                    <div class="accordion__block_item fic">
+                                        <div class="accordion__block_item_intro">Окрашивание волос</div>
+                                        <div class="accordion__block_item_address">5 000 ₽</div>
+                                    </div>
 
-							  			<div class="accordion__block_item fic">
-							  				<div class="accordion__block_item_intro">Укладка волос</div>
-									  		<div class="accordion__block_item_address">1 500 ₽</div>
-							  			</div>	
-								  </div>
-							  
+                                    <div class="accordion__block_item fic">
+                                        <div class="accordion__block_item_intro">Укладка волос</div>
+                                        <div class="accordion__block_item_address">1 500 ₽</div>
+                                    </div>
+                              </div>
 							</div>
 						 	<button class="accordion">Ногтевой сервис</button>
 							<div class="panel">
@@ -171,10 +154,4 @@
 			</div>
 		</div>
 	</section>
-{% endblock %}
-
-{% block footer %}
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}

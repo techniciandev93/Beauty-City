@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static  'BeautySaloon/css/jquery.arcticmodal-0.3.css' %}">
+	<link rel="stylesheet" href="{% static 'BeautySaloon/css/simple.css' %}">
+	<link rel="stylesheet" href="{% static 'BeautySaloon/css/bootstrap-grid.min.css' %}">
+	<link rel="stylesheet" href="{% static 'BeautySaloon/css/air-datepicker.css' %}">
+	<link rel="stylesheet" href="{% static 'BeautySaloon/css/main.css' %}">
+{% endblock %}
+
+{% block section %}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+	<section id="serviceFinally">
+		<div class="container">
+			<div class="serviceFinally">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<div class="breadCrumbs">
+							<a href="#" class="breadCrumbs__item">На главную</a>
+						</div>
+						<div class="service__block">
+							<h1 class="service__title">Запись на услугу</h1>
+						</div>
+						<form action="#" class="serviceFinally__form">
+							<div class="serviceFinally__form_block">
+								<div class="serviceFinally__form_header fic">
+									<span class="serviceFinally__form_header__number">Запись №32985</span>
+									<div class="serviceFinally__form_header__item fic">
+										<div class="serviceFinally__form_header__service">BeautyCity Пушкинская</div>
+										<div class="serviceFinally__form_header__address">ул. Пушкинская, д. 78А</div>
+									</div>
+								</div>
+								<div class="serviceFinally__form_content">
+									<div class="serviceFinally__form_content__block fic">
+										<div class="serviceFinally__form_content__title">Дневной макияж</div>
+										<div class="serviceFinally__form_content__price">750 ₽</div>
+									</div>
+									<div class="serviceFinally__form_content__block fic">
+										<div class="serviceFinally__form_content__items fic">
+										  	<img src="{% static 'BeautySaloon/img/masters/avatar/vizajist1.svg' %}" alt="avatar" class="accordion__block_img">
+										  	<div class="accordion__block_master">Елена Грибнова</div>
+									    </div>
+									    <div class="serviceFinally__form_content__item fic">
+											<div class="serviceFinally__form_content__time">16:30</div>
+											<div class="serviceFinally__form_content__date">18 ноября</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							<div class="serviceFinally__form_itesm">
+								<div class="contacts__form_block fic">
+									<input type="text" name="fname" class="contacts__form_iunput" placeholder="Введите имя" required="">
+									<div class="contacts__form_inputBlock">
+										<input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required="">
+									</div>
+								</div>
+								
+								<textarea name="contactsTextarea" class="contacts__form_textarea" placeholder="Вопрос(необязательно)"></textarea>
+								<div class="contacts__form_checkboxBlock fic">
+									<input type="checkbox" class="contacts__form_checkbox" checked="">
+									<span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфидециоальности</span>
+								</div>
+								<button type="submit" class="serviceFinallys__form_btn">Записаться</button>
+								<button type="submit" class="serviceFinallys__form_back">Назад</button>
+							</div>
+						</form>	
+					</div>
+					<div class="col-md-12 col-lg-5">
+						<img src="{% static 'BeautySaloon/img/bannerImg.svg' %}" alt="bannerImg" class="banner__img">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block additional_data %}
+	<div style="display: none;">
+		<div class="box-modal authPopup popup" id="authModal">
+			<div class="box-modal_close arcticmodal-close"><img src="{% static 'BeautySaloon/img/x.svg' %}" alt="x"></div>
+			<div class="popup__title authPopup__title">Войти по коду</div>
+			<p class="popup__text authPopup__text">Введите свой номер телефона, мы вышлем на него код</p>
+			<form action="#" class="authPopup__form">
+				<div class="contacts__form_inputBlock">
+					<input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required="">
+				</div>
+				<div class="contacts__form_checkboxBlock fic">
+					<input type="checkbox" class="contacts__form_checkbox" checked="">
+					<span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфидециоальности</span>
+				</div>
+				<button type="submit" class="popup__btn authPopup__btn">Отправить</button>
+			</form>
+		</div>
+	</div>
+	<div style="display: none;">
+		<div class="box-modal confirmPopup popup" id="confirmModal">
+			<div class="box-modal_close arcticmodal-close"><img src="{% static 'BeautySaloon/img/x.svg' %}" alt="x"></div>
+			<div class="popup__title confirmPopup__title">Подтвердите номер</div>
+			<p class="popup__text confirmPopup__text">Введите код, полученный по SMS на номер +7 (928) 164 48 60</p>
+			<div class="confirmPopup__number">
+				<input type="text" name="num1" class="tipsPopup__form_inputNum popup__input" placeholder="" required="">
+				<input type="text" name="num2" class="tipsPopup__form_inputNum popup__input" placeholder="" required="">
+				<input type="text" name="num3" class="tipsPopup__form_inputNum popup__input" placeholder="" required="">
+				<input type="text" name="num4" class="tipsPopup__form_inputNum popup__input" placeholder="" required="">
+
+			</div>
+			<div class="confirmPopup__sms">Если SMS не пришло вы можете <a href="#" class="popup__link">запросить код повторно</a></div>
+			<div class="confirmPopup__changeNumber">
+				<a href="#" class="confirmPopup__link popup__link">Изменить номер телефона</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'BeautySaloon/js/air-datepicker.js' %}"></script>
+	<script src="{% static 'BeautySaloon/js/jquery.arcticmodal-0.3.min.js' %}"></script>
+{% endblock %}

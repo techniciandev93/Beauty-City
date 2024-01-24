@@ -17,7 +17,7 @@ def send_sms(recipient_number, message):
     return response.ok
 
 
-def verification_code(phone_number):
+def generate_or_update_verification_code(phone_number):
     code = random.randint(1000, 9999)
     sms_verification_code_instance, created = SmsVerificationCode.objects.get_or_create(
         phone_number=phone_number,
@@ -26,4 +26,5 @@ def verification_code(phone_number):
     if not created:
         sms_verification_code_instance.code = code
         sms_verification_code_instance.save()
-    return send_sms(phone_number, code)
+    #return send_sms(phone_number, code)
+    return True

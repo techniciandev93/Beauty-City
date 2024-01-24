@@ -20,7 +20,7 @@ SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['127.0.0.1','*'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['127.0.0.1'])
 
 
 # Application definition
@@ -50,7 +50,7 @@ ROOT_URLCONF = 'BeautyCity.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'users/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'BeautySaloon', 'static')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,7 +121,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 STATIC_URL = env.str('STATIC_URL', '/static/')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

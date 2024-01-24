@@ -2,10 +2,11 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from .views import SmsAuthorizationView
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('verification-code/', views.sms_authorization, name='verification_code'),
+    path('login/', SmsAuthorizationView.as_view(), name='login')
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static  'css/jquery.arcticmodal-0.3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/simple.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class=" authPopup popup" id="authModal" style="margin: 50px auto;">
+        <div class="box-modal_close arcticmodal-close"></div>
+        <div class="popup__title authPopup__title">Войти по коду</div>
+        <p class="popup__text authPopup__text">Введите свой номер телефона, мы вышлем на него код</p>
+
+        <form method="post" action="{% url 'login' %}" class="authPopup__form">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                    <strong>Ошибка:</strong> Пожалуйста, исправьте следующие ошибки.
+                    <ul>
+                        {% for error in form.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <br>
+            {% endif %}
+
+            <div class="contacts__form_inputBlock">
+                {{ form.phone_number }}
+            </div>
+            {% if form.phone_number.errors %}
+                {{ form.phone_number.errors }}
+                <br>
+            {% endif %}
+
+            <div class="contacts__form_checkboxBlock fic">
+                {{ form.agree_to_policy }}
+                <span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфиденциальности</span>
+            </div>
+
+            {% if form.agree_to_policy.errors %}
+                {{ form.agree_to_policy.errors }}
+                <br>
+            {% endif %}
+
+            <button type="submit" class="popup__btn authPopup__btn">Отправить</button>
+        </form>
+    </div>
+{% endblock %}

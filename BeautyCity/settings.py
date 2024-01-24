@@ -9,6 +9,7 @@ env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SMS_RU_API_ID = env.str('SMS_RU_API_ID')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -19,7 +20,7 @@ SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['127.0.0.1'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['127.0.0.1','*'])
 
 
 # Application definition

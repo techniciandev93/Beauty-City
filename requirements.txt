@@ -1,2 +1,5 @@
 Django==5.0.1
 environs==10.3.0
+requests==2.31.0
+django-phonenumber-field==7.3.0
+django-phonenumbers==1.0.1

@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('verification-code/', views.sms_authorization, name='verification_code'),
 ]
 
 if settings.DEBUG:

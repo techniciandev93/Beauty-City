@@ -2,7 +2,7 @@ import phonenumbers
 from django import forms
 
 
-class VerificationCodeForm(forms.Form):
+class PhoneNumberForm(forms.Form):
     phone_number = forms.CharField(
         label='Номер телефона',
         widget=forms.TextInput(attrs={'placeholder': '+7(999)999--99-99', 'class': 'contacts__form_iunput'}),
@@ -23,3 +23,28 @@ class VerificationCodeForm(forms.Form):
         except phonenumbers.NumberParseException:
             raise forms.ValidationError('Ошибка при разборе номера телефона.')
         return phone_number
+
+
+class VerificationCodeForm(forms.Form):
+    phone_number = forms.CharField(required=True)
+
+    digit1 = forms.CharField(
+        max_length=1,
+        widget=forms.TextInput(
+            attrs={'pattern': '[0-9]', 'class': 'tipsPopup__form_inputNum popup__input digit-input', 'maxlength': '1'})
+    )
+    digit2 = forms.CharField(
+        max_length=1,
+        widget=forms.TextInput(
+            attrs={'pattern': '[0-9]', 'class': 'tipsPopup__form_inputNum popup__input digit-input', 'maxlength': '1'})
+    )
+    digit3 = forms.CharField(
+        max_length=1,
+        widget=forms.TextInput(
+            attrs={'pattern': '[0-9]', 'class': 'tipsPopup__form_inputNum popup__input digit-input', 'maxlength': '1'})
+    )
+    digit4 = forms.CharField(
+        max_length=1,
+        widget=forms.TextInput(
+            attrs={'pattern': '[0-9]', 'class': 'tipsPopup__form_inputNum popup__input digit-input', 'maxlength': '1'})
+    )

@@ -23,6 +23,9 @@ DEBUG = env.bool('DEBUG', True)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['127.0.0.1'])
 
 
+AUTH_USER_MODEL = 'users.CustomUser'
+AUTHENTICATION_BACKENDS = ['users.backends.CustomAuthBackend']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -32,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'BeautySaloon'
+    'BeautySaloon',
+    'users'
 ]
 
 MIDDLEWARE = [

@@ -20,7 +20,7 @@
         <div class="popup__title authPopup__title">Войти по коду</div>
         <p class="popup__text authPopup__text">Введите свой номер телефона, мы вышлем на него код</p>
 
-        <form method="post" action="{% url 'login' %}" class="authPopup__form">
+        <form method="post" action="{% url 'users:login' %}" class="authPopup__form">
             {% csrf_token %}
 
             {% if form.errors %}

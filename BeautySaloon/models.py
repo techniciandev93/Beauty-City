@@ -7,12 +7,12 @@ class Saloon(models.Model):
     address = models.CharField(verbose_name='Адрес', max_length=200)
     service = models.ForeignKey(
         'Service',
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         verbose_name='Услуга',
         related_name='saloons')
     specialist = models.ForeignKey(
         'Specialist',
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         verbose_name='Специалист',
         related_name='saloons')
     image = models.ImageField(verbose_name='Фото салона', upload_to='images/')
@@ -28,7 +28,7 @@ class Saloon(models.Model):
 class Service(models.Model):
     name = models.CharField(verbose_name='Наименование услуги', max_length=200)
     specialist = models.ForeignKey('Specialist',
-                                   on_delete=models.SET_NULL,
+                                   on_delete=models.CASCADE,
                                    verbose_name='Специалист',
                                    related_name='services')
     price = models.DecimalField(verbose_name='цена', max_digits=8, decimal_places=2, validators=[MinValueValidator(1)])
@@ -72,9 +72,9 @@ class Order(models.Model):
     saloon = models.ForeignKey(Saloon, on_delete=models.CASCADE, verbose_name='Салон', related_name='orders')
     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Услуга', related_name='orders')
     specialist = models.ForeignKey('Specialist',
-                                   on_delete=models.SET_NULL,
+                                   on_delete=models.CASCADE,
                                    verbose_name='Специалист',
-                                   related_name='services')
+                                   related_name='orders')
     appointment_time = models.DateTimeField(verbose_name='Время записи')
     payment_state = models.BooleanField(verbose_name='Статус оплаты', default=False)
     price = models.DecimalField(
@@ -111,9 +111,9 @@ class Advertising(models.Model):
 class Review(models.Model):
     client = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Клиент', related_name='reviews')
     specialist = models.ForeignKey('Specialist',
-                                   on_delete=models.SET_NULL,
+                                   on_delete=models.CASCADE,
                                    verbose_name='Специалист',
-                                   related_name='services')
+                                   related_name='reviews')
     text = models.TextField(verbose_name='Текст отзыва', blank=True, null=True)
     RATING_CHOICES = [
         ('one star', '1'),

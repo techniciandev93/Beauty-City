@@ -187,10 +187,9 @@
                                         <span class="header__block_auth__intro">Алиса И.</span>
                                     {% else %}
                                         <img src="{% static 'img/acc.svg' %}" alt="account" class="header__account_img">
-                                        <a href="{% url 'login' %}" class="button-style">
+                                        <a href="{% url 'users:login' %}" class="button-style">
                                             <span class="header__block_auth__intro">Войти</span>
                                         </a>
-
                                     {% endif %}
 
                             </div>

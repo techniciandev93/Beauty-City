@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static  'css/jquery.arcticmodal-0.3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/simple.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="box-modal confirmPopup popup" id="confirmModal" style="margin: 50px auto;">
+        <div class="box-modal_close arcticmodal-close"></div>
+        <div class="popup__title confirmPopup__title">Подтвердите номер</div>
+        <p class="popup__text confirmPopup__text">Введите код, полученный по SMS на номер {{ phone_number }}</p>
+        <div class="confirmPopup__number">
+
+            <form method="post" action="{% url 'users:verification_code' %}" class="authPopup__form">
+                {% csrf_token %}
+                <input type="hidden" name="phone_number" value="{{ phone_number }}" id="id_phone_number">
+
+                {% if sms_error %}
+                    {{ sms_error }}!
+                    Попробуйте ещё раз.
+                    <br>
+                {% endif %}
+                <br>
+
+                {% if form.errors %}
+                    <div class="alert alert-danger mt-3">
+                        <strong>Ошибка:</strong> Пожалуйста, исправьте следующие ошибки.
+                        <ul>
+                            {% for error in form.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <br>
+                {% endif %}
+
+                <div class="inputs" style="display: flex; flex-wrap: nowrap; flex-direction: row;">
+                {{ form.digit1 }}
+                {% if form.digit1.errors %}
+                    {{ form.digit1.errors }}
+                    <br>
+                {% endif %}
+
+                {{ form.digit2 }}
+                {% if form.digit2.errors %}
+                    {{ form.digit2.errors }}
+                    <br>
+                {% endif %}
+
+                {{ form.digit3 }}
+                {% if form.digit3.errors %}
+                    {{ form.digit3.errors }}
+                    <br>
+                {% endif %}
+
+                {{ form.digit4 }}
+                {% if form.digit4.errors %}
+                    {{ form.digit4.errors }}
+                    <br>
+                {% endif %}
+                </div>
+                <br>
+                <button type="submit" class="popup__btn authPopup__btn">Отправить</button>
+            </form>
+        </div>
+        <div class="confirmPopup__sms">Если SMS не пришло вы можете <a href="#" class="popup__link">запросить код
+            повторно</a></div>
+        <div class="confirmPopup__changeNumber">
+            <a href="{% url 'users:login' %}" class="confirmPopup__link popup__link">Изменить номер телефона</a>
+        </div>
+    </div>
+{% endblock %}

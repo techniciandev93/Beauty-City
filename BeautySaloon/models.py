@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Saloon(models.Model):
+    name = models.CharField(verbose_name='Название салона', max_length=200)
     address = models.CharField(verbose_name='Адрес', max_length=200)
     service = models.ForeignKey(
         'Service',

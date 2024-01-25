@@ -130,3 +130,10 @@ class Review(models.Model):
         null=True,
         db_index=True)
 
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+
+    def __str__(self):
+        return f'ID отзыва {self.id}'
+

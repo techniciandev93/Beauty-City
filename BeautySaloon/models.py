@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from users.models import CustomUser
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -6,15 +8,9 @@ from django.db import models
 class Saloon(models.Model):
     name = models.CharField(verbose_name='Название салона', max_length=200)
     address = models.CharField(verbose_name='Адрес', max_length=200)
-    service = models.ForeignKey(
+    service = models.ManyToManyField(
         'Service',
-        on_delete=models.CASCADE,
         verbose_name='Услуга',
-        related_name='saloons')
-    specialist = models.ForeignKey(
-        'Specialist',
-        on_delete=models.CASCADE,
-        verbose_name='Специалист',
         related_name='saloons')
     image = models.ImageField(verbose_name='Фото салона', upload_to='images/')
 
@@ -23,15 +19,11 @@ class Saloon(models.Model):
         verbose_name_plural = 'Салоны'
 
     def __str__(self):
-        return f'Салон по адресу {self.address}'
+        return f'Салон {self.name}'
 
 
 class Service(models.Model):
     name = models.CharField(verbose_name='Наименование услуги', max_length=200)
-    specialist = models.ForeignKey('Specialist',
-                                   on_delete=models.CASCADE,
-                                   verbose_name='Специалист',
-                                   related_name='services')
     price = models.DecimalField(verbose_name='цена', max_digits=8, decimal_places=2, validators=[MinValueValidator(1)])
     image = models.ImageField(verbose_name='Фото услуги', upload_to='images/')
 
@@ -45,20 +37,16 @@ class Service(models.Model):
 
 class Specialist(models.Model):
     name = models.CharField(verbose_name='Имя мастера', max_length=200)
+    speciality = models.CharField(verbose_name='Специальность', max_length=200)
+    career_start = models.DateField(verbose_name='Старт карьеры', null=True, blank=True)
     start_work_time = models.TimeField(verbose_name='Время начала работы')
     end_work_time = models.TimeField(verbose_name='Время окончания работы')
-    service = models.ForeignKey(
+    service = models.ManyToManyField(
         'Service',
-        on_delete=models.CASCADE,
         verbose_name='Услуга',
         related_name='specialists')
     image = models.ImageField(verbose_name='Фото специалиста', upload_to='images/')
-    rating = models.ForeignKey(
-        'Review',
-        on_delete=models.CASCADE,
-        verbose_name='Рейтинг мастера',
-        related_name='specialists'
-    )
+    saloon = models.ForeignKey(Saloon, on_delete=models.CASCADE, verbose_name='Салон', related_name='specialists')
 
     class Meta:
         verbose_name = 'Мастер'
@@ -66,6 +54,13 @@ class Specialist(models.Model):
 
     def __str__(self):
         return f'Мастер {self.name}'
+
+    def experience(self):
+        today = datetime.today().date()
+        delta = today - self.career_start
+        years = delta.days // 365
+        months = (delta.days % 365) // 30
+        return years, months
 
 
 class Order(models.Model):
@@ -130,6 +125,8 @@ class Review(models.Model):
         blank=True,
         null=True,
         db_index=True)
+
+    date = models.DateField(verbose_name='Дата отзыва', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Отзыв'

@@ -26,6 +26,14 @@ class Service(models.Model):
     name = models.CharField(verbose_name='Наименование услуги', max_length=200)
     price = models.DecimalField(verbose_name='цена', max_digits=8, decimal_places=2, validators=[MinValueValidator(1)])
     image = models.ImageField(verbose_name='Фото услуги', upload_to='images/')
+    category = models.ForeignKey(
+        'ServiceCategory',
+        verbose_name='Категория сервиса',
+        on_delete=models.CASCADE,
+        related_name='services',
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = 'Услуга'
@@ -135,3 +143,13 @@ class Review(models.Model):
     def __str__(self):
         return f'ID отзыва {self.id}'
 
+
+class ServiceCategory(models.Model):
+    name = models.CharField(verbose_name='Название категории', max_length=200)
+
+    class Meta:
+        verbose_name = 'Категория сервиса'
+        verbose_name_plural = 'Категории сервиса'
+
+    def __str__(self):
+        return self.name

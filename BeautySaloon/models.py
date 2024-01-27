@@ -49,9 +49,9 @@ class Specialist(models.Model):
     career_start = models.DateField(verbose_name='Старт карьеры', null=True, blank=True)
     start_work_time = models.TimeField(verbose_name='Время начала работы')
     end_work_time = models.TimeField(verbose_name='Время окончания работы')
-    service = models.ManyToManyField(
-        'Service',
-        verbose_name='Услуга',
+    service_category = models.ManyToManyField(
+        'ServiceCategory',
+        verbose_name='Категория оказываемых услуг',
         related_name='specialists')
     image = models.ImageField(verbose_name='Фото специалиста', upload_to='images/')
     saloon = models.ForeignKey(Saloon, on_delete=models.CASCADE, verbose_name='Салон', related_name='specialists')
@@ -92,6 +92,13 @@ class Order(models.Model):
         max_digits=8,
         decimal_places=2,
         validators=[MinValueValidator(1)])
+    review = models.ForeignKey(
+        'Review',
+        on_delete=models.CASCADE,
+        verbose_name='Отзыв',
+        related_name='orders',
+        default=None
+    )
 
     class Meta:
         verbose_name = 'Заказ'

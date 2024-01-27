@@ -91,7 +91,7 @@ class Order(models.Model):
         verbose_name='Чаевые',
         max_digits=8,
         decimal_places=2,
-        validators=[MinValueValidator(1)])
+        validators=[MinValueValidator(1)], blank=True, null=True)
 
     class Meta:
         verbose_name = 'Заказ'

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .models import Saloon, Service, Specialist, Review
+from .models import Saloon, Service, Specialist, Review, Order
 
 
 def index(request):
@@ -54,7 +54,12 @@ def index(request):
 
 @login_required
 def profile(request):
-    return render(request, 'BeautySaloon/notes.html')
+    if request.user.is_superuser:
+        return render(request, 'BeautySaloon/admin.html')
+    orders = Order.objects.prefetch_related('client', 'saloon', 'service', 'specialist').all()
+    total_unpaid_orders = request.user.calculate_total_unpaid_orders()
+    return render(request, 'BeautySaloon/notes.html',
+                  context={'orders': orders, 'total_unpaid_orders': total_unpaid_orders})
 
 
 def get_saloons(request):

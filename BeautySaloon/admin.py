@@ -33,5 +33,8 @@ class ServiceCategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Order)
-class ServiceCategoryAdmin(admin.ModelAdmin):
-    pass
+class OrderAdmin(admin.ModelAdmin):
+    model = Order
+    list_display = ['id', 'client', 'saloon', 'service', 'specialist', 'appointment_time', 'price', 'tip',
+                    'payment_state']
+    search_fields = ['client__username', 'specialist__name']

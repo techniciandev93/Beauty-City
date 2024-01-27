@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import Sum
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -37,3 +38,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f'{self.phone_number} {self.username}'
+
+    def calculate_total_unpaid_orders(self):
+        total_unpaid_orders = self.orders.filter(payment_state=False).aggregate(total=Sum('service__price'))['total']
+        return total_unpaid_orders if total_unpaid_orders is not None else 0

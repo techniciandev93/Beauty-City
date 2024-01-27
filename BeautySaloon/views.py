@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Saloon, Service, Specialist, Review
 
@@ -49,3 +50,8 @@ def index(request):
             'reviews': reviews
         }
     )
+
+
+@login_required
+def profile(request):
+    return render(request, 'BeautySaloon/notes.html')

@@ -49,3 +49,55 @@ def index(request):
             'reviews': reviews
         }
     )
+
+
+def get_saloons(request):
+    saloons = [{
+        'id': saloon.id,
+        'name': saloon.name,
+        'address': saloon.address
+    }
+        for saloon in Saloon.objects.all()
+    ]
+    return render(
+        request,
+        'BeautySaloon/select_saloon.html',
+        context={
+            'saloons': saloons
+        })
+
+
+def get_services(request):
+    if request.method == 'POST':
+        saloon_id = request.POST.get('selected_saloon')
+        saloon = Saloon.objects.get(id=saloon_id)
+        services = {
+            category['category__name']:
+                [
+                    {
+                        'id': service.id,
+                        'name': service.name,
+                        'price': service.price
+                    } for service in saloon.service.filter(category__id=category['category__id'])
+                ]
+            for category in saloon.service.values('category__id', 'category__name').distinct()
+        }
+
+        return render(
+            request,
+            'BeautySaloon/select_service.html',
+            context={
+                'services': services
+            })
+    else:
+        pass
+
+
+def get_masters(request):
+    if request.method == 'POST':
+        saloon_id = request.POST.get('selected_service')
+        print(request.POST)
+        print(saloon_id)
+        return render(
+            request,
+            'BeautySaloon/select_master.html')

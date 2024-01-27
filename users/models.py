@@ -39,6 +39,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f'{self.phone_number} {self.username}'
 
+    @property
     def calculate_total_unpaid_orders(self):
         total_unpaid_orders = self.orders.filter(payment_state=False).aggregate(total=Sum('service__price'))['total']
         return total_unpaid_orders if total_unpaid_orders is not None else 0

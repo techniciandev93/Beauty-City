@@ -91,15 +91,18 @@ class Order(models.Model):
         verbose_name='Чаевые',
         max_digits=8,
         decimal_places=2,
-        validators=[MinValueValidator(1)])
+        validators=[MinValueValidator(1)],
+        blank=True,
+        null=True
+    )
     review = models.ForeignKey(
         'Review',
         on_delete=models.CASCADE,
         verbose_name='Отзыв',
         related_name='orders',
-        default=None
+        blank=True,
+        null=True,
     )
-
 
     class Meta:
         verbose_name = 'Заказ'
@@ -127,7 +130,7 @@ class Review(models.Model):
                                    on_delete=models.CASCADE,
                                    verbose_name='Специалист',
                                    related_name='reviews')
-    text = models.TextField(verbose_name='Текст отзыва', blank=True, null=True)
+    text = models.TextField(verbose_name='Текст отзыва')
     RATING_CHOICES = [
         ('one star', '1'),
         ('two_stars', '2'),
@@ -143,7 +146,7 @@ class Review(models.Model):
         null=True,
         db_index=True)
 
-    date = models.DateField(verbose_name='Дата отзыва', blank=True, null=True)
+    date = models.DateField(verbose_name='Дата отзыва', auto_now_add=True)
 
     class Meta:
         verbose_name = 'Отзыв'

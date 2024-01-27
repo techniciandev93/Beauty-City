@@ -17,12 +17,13 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Specialist)
 class SpecialistAdmin(admin.ModelAdmin):
-    fields = ['saloon', 'name', 'career_start', 'speciality', 'start_work_time', 'end_work_time', 'service', 'image']
-    raw_id_fields = ['service', 'saloon']
+    fields = ['saloon', 'name', 'career_start', 'speciality', 'start_work_time', 'end_work_time', 'service_category', 'image']
+    raw_id_fields = ['service_category', 'saloon']
 
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    readonly_fields = ('date',)
     fields = ['client', 'specialist', 'text', 'rating', 'date']
     raw_id_fields = ['client', 'specialist']
 

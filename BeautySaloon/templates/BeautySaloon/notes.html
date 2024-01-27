@@ -143,8 +143,11 @@
                                             </div>
                                             <hr class="notes__block_hr">
                                             <div class="notes__footer fic">
-                                                <a href="#" class="notes__footer_link rewiewPopupOpen">Оставить
-                                                    отзыв</a>
+                                                <a href="{% url 'review' order_id=order.id %}"
+                                                   onclick="event.preventDefault(); window.location.href = '{% url 'review' order_id=order.id %}';"
+                                                   style="font-weight: 500; font-size: 12px; line-height: 16px; text-decoration-line: underline; text-decoration: none; color: #F6A912; margin-right: 29px;">
+                                                    Оставить отзыв
+                                                </a>
                                                 <a href="#" class="notes__footer_link tipsPopupOpen">Чаевые</a>
                                                 <button class="notes__footer_btn payPopupOpen">Оплатить</button>
                                                 <div class="notes__main_pay unPaid">НЕОПЛАЧЕНО</div>
@@ -209,8 +212,11 @@
                                             </div>
                                             <hr class="notes__block_hr">
                                             <div class="notes__footer fic">
-                                                <a href="#" class="notes__footer_link rewiewPopupOpen">Оставить
-                                                    отзыв</a>
+                                                <a href="{% url 'review' order_id=order.id %}"
+                                                   onclick="event.preventDefault(); window.location.href = '{% url 'review' order_id=order.id %}';"
+                                                   style="font-weight: 500; font-size: 12px; line-height: 16px; text-decoration-line: underline; text-decoration: none; color: #F6A912; margin-right: 29px;">
+                                                    Оставить отзыв
+                                                </a>
                                                 <a href="#" class="notes__footer_link tipsPopupOpen">Чаевые</a>
                                                 <div class="notes__main_pay payid">ОПЛАЧЕНО</div>
                                             </div>

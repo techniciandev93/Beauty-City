@@ -1721,7 +1721,7 @@ line-height: 33px;
 color: #F6A912;
 }
 /*End notes.html*/
-/* admin.html*/
+/* admin2.html*/
 .admin {
 	padding-top: 40px;
 	padding-bottom: 188px;
@@ -1823,7 +1823,7 @@ color: #FFCD07;
 	justify-content: space-between;
 	align-items: center;
 }
-/*End admin.html*/
+/*End admin2.html*/
 
 /*popup*/
 .popup{
@@ -2421,7 +2421,7 @@ color: #262626;
 		margin: 0 auto;
 	}
 
-	/*admin.html*/
+	/*admin2.html*/
 	.admin__main_block__items {
 		flex-direction: column;
 	}

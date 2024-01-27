@@ -80,6 +80,7 @@ class Order(models.Model):
                                    verbose_name='Специалист',
                                    related_name='orders')
     appointment_time = models.DateTimeField(verbose_name='Время записи')
+    end_appointment_time = models.DateTimeField(verbose_name='Конец времени записи', blank=True, null=True)
     payment_state = models.BooleanField(verbose_name='Статус оплаты', default=False)
     price = models.DecimalField(
         verbose_name='Итоговая сумма заказа',

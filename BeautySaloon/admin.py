@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from BeautySaloon.models import Saloon, Service, Specialist, Review, ServiceCategory
+from BeautySaloon.models import Saloon, Service, Specialist, Review, ServiceCategory, Order
 
 
 @admin.register(Saloon)
@@ -30,3 +30,11 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(ServiceCategory)
 class ServiceCategoryAdmin(admin.ModelAdmin):
     fields = ['name']
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    model = Order
+    list_display = ['id', 'client', 'saloon', 'service', 'specialist', 'appointment_time', 'price', 'tip',
+                    'payment_state']
+    search_fields = ['client__username', 'specialist__name']

@@ -2,10 +2,12 @@ import json
 from datetime import timedelta, datetime
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 import pytz
 
+from .forms import ReviewTextForm
 from .models import Saloon, Service, Specialist, Review, Order
+from .services import monthly_payment_stats, registered_users_stats
 
 
 def index(request):
@@ -58,11 +60,39 @@ def index(request):
 
 
 @login_required
+def create_review(request, order_id):
+    order = get_object_or_404(Order, id=order_id, client=request.user, review__isnull=True)
+
+    if request.method == 'POST':
+        form = ReviewTextForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            review = Review.objects.create(
+                client=request.user,
+                specialist=order.specialist,
+                text=text,
+            )
+            order.review = review
+            order.save()
+            return redirect('profile')
+    else:
+        form = ReviewTextForm()
+    return render(request, 'BeautySaloon/review.html', {'form': form, 'orderid': order.id})
+
+
+@login_required
 def profile(request):
     if request.user.is_superuser:
-        return render(request, 'BeautySaloon/admin.html')
-    orders = Order.objects.prefetch_related('client', 'saloon', 'service', 'specialist').all()
-    total_unpaid_orders = request.user.calculate_total_unpaid_orders()
+        total_payment_this_month = monthly_payment_stats()
+        users_registered_this_month, total_users_registered_this_year, total_users = registered_users_stats()
+        return render(request, 'BeautySaloon/admin.html', context={
+            'total_payment_this_month': total_payment_this_month,
+            'users_registered_this_month': users_registered_this_month,
+            'total_users_registered_this_year': total_users_registered_this_year,
+            'total_users': total_users
+        })
+    orders = Order.objects.prefetch_related('client', 'saloon', 'service', 'specialist').filter(client=request.user)
+    total_unpaid_orders = request.user.calculate_total_unpaid_orders
     return render(request, 'BeautySaloon/notes.html',
                   context={'orders': orders, 'total_unpaid_orders': total_unpaid_orders})
 

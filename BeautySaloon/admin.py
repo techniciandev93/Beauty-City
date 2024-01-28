@@ -24,6 +24,7 @@ class SpecialistAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    readonly_fields = ('date',)
     fields = ['client', 'specialist', 'text', 'rating', 'date']
     raw_id_fields = ['client', 'specialist']
 

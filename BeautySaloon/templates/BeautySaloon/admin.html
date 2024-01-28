@@ -2,114 +2,183 @@
 {% load static %}
 
 {% block extra_head %}
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
-	<script src="{% static 'js/air-datepicker.js' %}"></script>
-	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.arcticmodal-0.3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/simple.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 {% endblock %}
 
-{% block section %}
-{% endblock %}
-
-{% block header %}
-{% endblock %}
 
 {% block content %}
-	<section id="admin">
-		<div class="container">
-			<div class="admin">
-				<div class="row">
-					<div class="col-md-2 dec">
-						<div class="accaunt__left">
-							<div class="accaunt__ava fic">
-								<img src="{% static 'img/avatars/1.svg' %}" alt="avatar" class="accaunt__ava_img">
-								<span class="accaunt__ava_name">Администратор</span>
-							</div>
-							<div class="accaunt__settings fic">
-								<a href="#" class="accaunt__settings_intro">Изменить профиль</a>
-								<a href="#" class="accaunt__settings_out">Выйти</a>
-							</div>
-							<nav>
-								<div class="accaunt__menu_title">МЕНЮ</div>
-								<ul class="accaunt__menu">
-									<li class="accaunt__menu_item active">
-										<a href="#" class="accaunt__menu_item__link">
-											<div class="accaunt__menu_block fic">
-												<img src="{% static 'img/icons/list.svg' %}" alt="icon" class="accaunt__menu_icon">
-												<span class="accaunt__menu_item__link_intro">Мои записи</span>
-											</div>	
-										</a>
-									</li>
-									<li class="accaunt__menu_item">
-										<a href="#" class="accaunt__menu_item__link">
-											<div class="accaunt__menu_block fic">
-												<img src="{% static 'img/icons/settings.svg' %}" alt="icon" class="accaunt__menu_icon">
-												<span class="accaunt__menu_item__link_intro">Настройки</span>
-											</div>	
-										</a>
-									</li>
-									<li class="accaunt__menu_item">
-										<a href="#" class="accaunt__menu_item__link">
-											<div class="accaunt__menu_block fic">
-												<img src="{% static 'img/icons/tex.svg' %}" alt="icon" class="accaunt__menu_icon">
-												<span class="accaunt__menu_item__link_intro">Тех. поддержка</span>
-											</div>	
-										</a>
-									</li>
-									<li class="accaunt__menu_item">
-										<a href="#" class="accaunt__menu_item__link">
-											<div class="accaunt__menu_block fic">
-												<img src="{% static 'img/icons/pay.svg' %}" alt="icon" class="accaunt__menu_icon">
-												<span class="accaunt__menu_item__link_intro">Платежи</span>
-											</div>	
-										</a>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-					<div class="col-md-9">
+    <section id="notes">
+        <div class="container">
+            <div class="notes">
+                <div class="row">
+                    <div class="col-md-2 dec">
+                        <div class="accaunt__left">
+                            <div class="accaunt__ava fic">
+                                <img src="{% static 'img/avatars/1.svg' %}" alt="avatar" class="accaunt__ava_img">
+                                <span class="accaunt__ava_name">{{ user.phone_number }}</span>
+                            </div>
+                            <div class="accaunt__settings fic">
+                                <a href="#" class="accaunt__settings_intro">Изменить профиль</a>
+                                <form method="post" action="{% url 'users:logout' %}" style="margin: 0; padding: 0;">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            style="border: none; background: none; padding: 0; font: inherit; cursor: pointer; text-decoration: none; color: #F85C5C; font-weight: 500; font-size: 11px; line-height: 14px;">
+                                        Выйти
+                                    </button>
+                                </form>
+                            </div>
+                            <nav>
+                                <div class="accaunt__menu_title">МЕНЮ</div>
+                                <ul class="accaunt__menu">
+                                    <li class="accaunt__menu_item active">
+                                        <a href="#" class="accaunt__menu_item__link">
+                                            <div class="accaunt__menu_block fic">
+                                                <img src="{% static 'img/icons/list.svg' %}" alt="icon"
+                                                     class="accaunt__menu_icon">
+                                                <span class="accaunt__menu_item__link_intro">Мои записи</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="accaunt__menu_item">
+                                        <a href="#" class="accaunt__menu_item__link">
+                                            <div class="accaunt__menu_block fic">
+                                                <img src="{% static 'img/icons/settings.svg' %}" alt="icon"
+                                                     class="accaunt__menu_icon">
+                                                <span class="accaunt__menu_item__link_intro">Настройки</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="accaunt__menu_item">
+                                        <a href="#" class="accaunt__menu_item__link">
+                                            <div class="accaunt__menu_block fic">
+                                                <img src="{% static 'img/icons/tex.svg' %}" alt="icon"
+                                                     class="accaunt__menu_icon">
+                                                <span class="accaunt__menu_item__link_intro">Тех. поддержка</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="accaunt__menu_item">
+                                        <a href="#" class="accaunt__menu_item__link">
+                                            <div class="accaunt__menu_block fic">
+                                                <img src="{% static 'img/icons/pay.svg' %}" alt="icon"
+                                                     class="accaunt__menu_icon">
+                                                <span class="accaunt__menu_item__link_intro">Платежи</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
 						<div class="admin__main">
 							<div class="admin__title">Главная</div>
 							<hr class="hr">
 							<div class="admin__main_block">
 								<div class="admin__main_block__items">
 									<div class="admin__main_monthPrise admin__main_block__elem">
-										<div class="admin__main_monthPrise__intro">Сумма оплат за месяц</div>	
-										<div class="admin__main_monthPrise__sum">628 200 рублей</div>
+										<div class="admin__main_monthPrise__intro">Сумма оплат за месяц</div>
+										<div class="admin__main_monthPrise__sum">{{ total_payment_this_month }} рублей</div>
 									</div>
 									<div class="admin__main_block__elem">
-										<div class="admin__main_monthPrise__intro">Посещений за месяц</div>	
-										<div class="admin__main_monthPrise__sum">349</div>
+										<div class="admin__main_monthPrise__intro">Всего зарегистрированно</div>
+										<div class="admin__main_monthPrise__sum">{{ total_users }}</div>
 									</div>
 								</div>
 								<div class="admin__main_block__items">
 									<div class="admin__main_block__elem">
-										<div class="admin__main_monthPrise__intro">Посещений за месяц</div>	
-										<div class="admin__main_monthPrise__sum">349</div>
+										<div class="admin__main_monthPrise__intro">Зарегистрированных за месяц</div>
+										<div class="admin__main_monthPrise__sum">{{ users_registered_this_month }}</div>
 									</div>
 									<div class="admin__main_block__elem">
-										<div class="admin__main_monthPrise__intro">Процент посещений</div>	
+										<div class="admin__main_monthPrise__intro">Процент посещений</div>
 										<div class="admin__main_monthPrise__circle">100%</div>
 									</div>
 									<div class="admin__main_block__elem">
-										<div class="admin__main_monthPrise__intro">Посещений за год</div>	
-										<div class="admin__main_monthPrise__sum">3 956</div>
+										<div class="admin__main_monthPrise__intro">Зарегистрированных за год</div>
+										<div class="admin__main_monthPrise__sum">{{ total_users_registered_this_year }}</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
-{% block footer %}
+{% block additional_data %}
+    <div style="display: none;">
+        <div class="box-modal paymentPopup popup" id="paymentModal">
+            <div class="box-modal_close arcticmodal-close"><img src="{% static 'img/x.svg' %}" alt="x"></div>
+            <div class="popup__title paymentPopup__title">Оплата</div>
+            <form action="#" class="paymentPopup__form">
+                <div class="paymentPopup__form_intro popup__intro">номер карты</div>
+                <input type="text" name="tel" class="paymentPopup__form_input popup__input" placeholder="Введите номер"
+                       required="">
+                <div class="paymentPopup__form_block fic">
+                    <input type="text" name="mm" class="tipsPopup__form_inputMin popup__input" placeholder="ММ"
+                           required="">
+                    <input type="text" name="gg" class="tipsPopup__form_inputMin popup__input" placeholder="ГГ"
+                           required="">
+                </div>
+                <div class="paymentPopup__form_elems fic">
+                    <input type="text" name="fname" class="paymentPopup__form_inputMid popup__input"
+                           placeholder="Имя владельца" required="">
+                    <input type="text" name="cvc" class="tipsPopup__form_inputMin popup__input" placeholder="CVC"
+                           required="">
+                </div>
+                <div class="paymentPopup__form_intro popup__intro">Ваш e-mail(необязательно)</div>
+                <input type="email" name="tel" class="paymentPopup__form_input popup__input"
+                       placeholder="pochta@mail.ru">
+                <button class="tipsPopup__btn popup__btn">Оплатить</button>
+            </form>
+        </div>
+    </div>
+    <div style="display: none;">
+        <div class="box-modal tipsPopup popup" id="tipsModal">
+            <div class="box-modal_close arcticmodal-close"><img src="{% static 'img/x.svg' %}" alt="x"></div>
+            <div class="">
+                <div class="popup__title tipsPopup__title">Чаевые</div>
+                <form action="#" class="tipsPopup__form">
+                    <div class="tipsPopup__form_intro popup__intro">Введите сумму чаевых</div>
+                    <input type="text" class="tipsPopup__form_input popup__input" placeholder="0.00" required="">
+                    <button class="tipsPopup__btn popup__btn">Далее</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="display: none;">
+        <div class="box-modal reviewPopup popup" id="reviewModal">
+            <div class="box-modal_close arcticmodal-close"><img src="{% static 'img/x.svg' %}" alt="x"></div>
+            <div class="popup__title reviewPopup__title">Отзыв</div>
+            <form action="#" class="reviewPopup__form">
+                <input type="text" name="fname" class="paymentPopup__form_input popup__input" placeholder="Введите имя"
+                       required="">
+                <div class="contacts__form_inputBlock">
+                    <input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99"
+                           required="">
+                </div>
+                <input type="text" name="dateVis" class="paymentPopup__form_input popup__input"
+                       placeholder="Дата посещения" required="">
+                <textarea name="popupTextarea" class="reviewPopup__form_textarea" placeholder="Текст отзыва"></textarea>
+                <div class="contacts__form_checkboxBlock fic">
+                    <input type="checkbox" class="contacts__form_checkbox" checked="">
+                    <span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфидециоальности</span>
+                </div>
+                <button class="tipsPopup__btn popup__btn">Оплатить</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
-{% block scripts %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/air-datepicker.js' %}"></script>
+    <script src="{% static 'js/jquery.arcticmodal-0.3.min.js' %}"></script>
 {% endblock %}

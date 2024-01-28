@@ -11,5 +11,5 @@ urlpatterns = [
     path('select_time/', views.get_time, name='select_time'),
     path('create_order/', views.create_order, name='create_order'),
     path('profile/', views.profile, name='profile'),
-    path('review/', views.profile, name='review'),
+    path('review/<int:order_id>/', views.create_review, name='review'),
 ]

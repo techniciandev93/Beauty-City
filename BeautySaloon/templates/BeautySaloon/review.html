@@ -17,12 +17,9 @@
 {% block content %}
     <div class=" authPopup popup" id="authModal" style="margin: 50px auto;">
         <div class="box-modal_close arcticmodal-close"></div>
-        <div class="popup__title authPopup__title">Войти по коду</div>
-        <p class="popup__text authPopup__text">Введите свой номер телефона, мы вышлем на него код</p>
-
-        <form method="post" action="{% url 'users:login' %}" class="authPopup__form">
+        <div class="popup__title authPopup__title">Напишите свой отзыв</div>
+        <form method="post" action="{% url 'review' order_id=orderid %}" class="authPopup__form">
             {% csrf_token %}
-
             {% if form.errors %}
                 <div class="alert alert-danger mt-3">
                     <strong>Ошибка:</strong> Пожалуйста, исправьте следующие ошибки.
@@ -34,25 +31,13 @@
                 </div>
                 <br>
             {% endif %}
-
-            <div class="contacts__form_inputBlock">
-                {{ form.phone_number }}
-            </div>
-            {% if form.phone_number.errors %}
-                {{ form.phone_number.errors }}
+            {{ form.text }}
+            {% if form.text.errors %}
+                <br>
+                {{ form.text.errors }}
                 <br>
             {% endif %}
-
-            <div class="contacts__form_checkboxBlock fic">
-                {{ form.agree_to_policy }}
-                <span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфиденциальности</span>
-            </div>
-
-            {% if form.agree_to_policy.errors %}
-                {{ form.agree_to_policy.errors }}
-                <br>
-            {% endif %}
-
+            <br>
             <button type="submit" class="popup__btn authPopup__btn">Отправить</button>
         </form>
     </div>

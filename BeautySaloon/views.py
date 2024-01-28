@@ -4,7 +4,6 @@ from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-import pytz
 
 from users.models import CustomUser
 from .forms import ReviewTextForm, OrderForm

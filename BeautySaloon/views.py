@@ -178,11 +178,9 @@ def get_time(request):
 
 def create_order(request):
     if request.method == 'POST':
-        # print(request.POST.get('selected_time'))
         meeting_time = json.loads(request.POST.get('selected_time'))
         selected_time = meeting_time.get('time')
         request.session['selected_time'] = selected_time
-        print(request.session.items())
         order_num = Order.objects.last().id + 1
         saloon = Saloon.objects.get(id=request.session.get('selected_saloon'))
         saloon_name = saloon.name

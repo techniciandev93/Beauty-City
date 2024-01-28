@@ -108,8 +108,7 @@ class Order(models.Model):
         null=True,
     )
 
-    question = models.TextField(verbose_name='Вопрос к заказу', default=None, null=True)
-
+    question = models.TextField(verbose_name='Вопрос к заказу', default=None, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Заказ'

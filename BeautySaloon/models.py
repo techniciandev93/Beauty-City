@@ -95,6 +95,7 @@ class Order(models.Model):
         blank=True,
         null=True
     )
+
     review = models.ForeignKey(
         'Review',
         on_delete=models.CASCADE,

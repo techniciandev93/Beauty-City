@@ -17,7 +17,8 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Specialist)
 class SpecialistAdmin(admin.ModelAdmin):
-    fields = ['saloon', 'name', 'career_start', 'speciality', 'start_work_time', 'end_work_time', 'service_category', 'image']
+    fields = ['saloon', 'name', 'career_start', 'speciality',
+              'start_work_time', 'end_work_time', 'service_category', 'image']
     raw_id_fields = ['service_category', 'saloon']
 
 
@@ -38,4 +39,4 @@ class OrderAdmin(admin.ModelAdmin):
     model = Order
     list_display = ['id', 'client', 'saloon', 'service', 'specialist', 'appointment_time', 'price', 'tip',
                     'payment_state']
-    search_fields = ['client__username', 'specialist__name']
+

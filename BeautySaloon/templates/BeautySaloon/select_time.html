@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
+    <script src="{% static 'js/air-datepicker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id="time">
+        <div class="container">
+            <div class="time">
+                <h2 class="time__title">Выберите время</h2>
+                <form action="{% url 'create_order' %}" method="post" id="timeForm">
+                    {% csrf_token %}
+                    <div class="time__block">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="time__elems">
+                                    <div class="time__items">
+                                        <div class="time__elems_intro">Утро</div>
+                                        <div class="time__elems_elem fic">
+                                            {% for slot in morning %}
+                                                <button data-time="{{ slot }}"
+                                                        class="time__elems_btn">{{ slot }}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="time__items">
+                                        <div class="time__elems_intro">День</div>
+                                        <div class="time__elems_elem fic">
+                                            {% for slot in day %}
+                                                <button data-time="{{ slot }}"
+                                                        class="time__elems_btn">{{ slot }}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="time__items">
+                                        <div class="time__elems_intro">Вечер</div>
+                                        <div class="time__elems_elem fic">
+                                            {% for slot in evening %}
+                                                <button data-time="{{ slot }}"
+                                                        class="time__elems_btn">{{ slot }}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="time__btns">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" id="selectedTime" name="selected_time">
+                                <button id="submitTime" type="submit" class="service__btn btn">Продолжить</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script>
+        var submitButton = document.getElementById("submitTime");
+        var selectedTimeInput = document.getElementById("selectedTime");
+
+        submitButton.addEventListener("click", function () {
+            var selectedTimeElement = document.querySelector(".time__elems_btn.active");
+
+            if (selectedTimeElement) {
+                var selectedTime = selectedTimeElement.dataset;
+
+                selectedTimeInput.value = JSON.stringify(selectedTime);
+            }
+        });
+    </script>
+{% endblock %}

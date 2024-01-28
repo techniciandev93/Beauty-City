@@ -27,7 +27,7 @@
                     <button class="service__btn btn">Запись по телефону</button>
                 </div>
 
-                <form action="/select_service/" method="post" class="service__form">
+                <form action="{% url 'select_services' %}" method="post" class="service__form">
                     {% csrf_token %}
                     <div class="service__form_block service__salons">
                         <button class="accordion">(Выберите салон)</button>
@@ -47,7 +47,6 @@
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                 <script>
                     $(document).ready(function () {
-                        // При выборе салона
                         $('.service__form_block.service__salons .accordion__block').on('click', function () {
                             var selectedSalonId = $(this).data('saloon-id');
                             $('#selectedSaloonId').val(selectedSalonId);

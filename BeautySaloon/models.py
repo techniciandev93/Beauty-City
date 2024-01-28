@@ -91,7 +91,7 @@ class Order(models.Model):
         verbose_name='Чаевые',
         max_digits=8,
         decimal_places=2,
-        validators=[MinValueValidator(1)])
+        default=None)
     review = models.ForeignKey(
         'Review',
         on_delete=models.CASCADE,
@@ -99,7 +99,6 @@ class Order(models.Model):
         related_name='orders',
         default=None
     )
-
 
     class Meta:
         verbose_name = 'Заказ'

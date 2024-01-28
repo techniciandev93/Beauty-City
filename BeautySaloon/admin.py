@@ -38,5 +38,5 @@ class ServiceCategoryAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     model = Order
     list_display = ['id', 'client', 'saloon', 'service', 'specialist', 'appointment_time', 'price', 'tip',
-                    'payment_state']
+                    'payment_state', 'question']
 

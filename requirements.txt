@@ -4,3 +4,5 @@ requests==2.31.0
 django-phonenumber-field==7.3.0
 django-phonenumbers==1.0.1
 pillow==10.2.0
+pytz==2023.3.post1
+shortuuid==1.0.11

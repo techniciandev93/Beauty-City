@@ -13,4 +13,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('review/<int:order_id>/', views.create_review, name='review'),
     path('place_order/', views.place_order, name='order_confirm')
+    path('advertising/<slug:slug>/', views.advertising, name='advertising_detail'),
+
 ]

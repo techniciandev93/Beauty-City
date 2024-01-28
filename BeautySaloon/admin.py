@@ -35,6 +35,7 @@ class ServiceCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    fields = ['client', 'saloon', 'service', 'specialist', 'appointment_time', 'end_appointment_time', 'payment_state',
-              'price', 'tip', 'review']
-    raw_id_fields = ['client', 'saloon', 'service', 'specialist', 'review']
+    model = Order
+    list_display = ['id', 'client', 'saloon', 'service', 'specialist', 'appointment_time', 'price', 'tip',
+                    'payment_state']
+

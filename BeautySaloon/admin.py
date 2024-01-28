@@ -1,6 +1,8 @@
+import shortuuid
 from django.contrib import admin
+from django.utils.html import format_html
 
-from BeautySaloon.models import Saloon, Service, Specialist, Review, ServiceCategory, Order
+from BeautySaloon.models import Saloon, Service, Specialist, Review, ServiceCategory, Order, Advertising
 
 
 @admin.register(Saloon)
@@ -40,3 +42,14 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'client', 'saloon', 'service', 'specialist', 'appointment_time', 'price', 'tip',
                     'payment_state', 'question']
 
+
+@admin.register(Advertising)
+class AdvertisingAdmin(admin.ModelAdmin):
+    readonly_fields = ('get_absolute_url',)
+    list_display = ('place', 'adv_counter', 'slug', 'get_absolute_url')
+    prepopulated_fields = {'slug': ('place',)}
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.slug = shortuuid.uuid()
+        super().save_model(request, obj, form, change)

@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from django.urls import reverse
+from django.utils.html import format_html
+
 from users.models import CustomUser
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -104,7 +107,7 @@ class Order(models.Model):
         blank=True,
         null=True,
     )
-    question = models.TextField(verbose_name='Вопрос к заказу', default=None)
+    question = models.TextField(verbose_name='Вопрос к заказу', default=None, blank=True)
 
     class Meta:
         verbose_name = 'Заказ'
@@ -117,13 +120,22 @@ class Order(models.Model):
 class Advertising(models.Model):
     place = models.CharField(verbose_name='Рекламное место', max_length=200)
     adv_counter = models.IntegerField(verbose_name='Счетчик переходов', default=0)
+    slug = models.SlugField(verbose_name='Уникальная часть url', max_length=200, unique=True)
 
     class Meta:
         verbose_name = 'Реклама'
         verbose_name_plural = 'Реклама'
 
-    def __int__(self):
+    def __str__(self):
         return f'Рекламное место {self.place}'
+
+    def get_absolute_url(self):
+        if self.slug:
+            absolute_url = reverse('advertising_detail', args=[str(self.slug)])
+            return format_html('<a href="{}" target="_blank">{}</a>', absolute_url, absolute_url)
+        return 'Будет создана после сохранения'
+
+    get_absolute_url.short_description = 'Ссылка для рекламы'
 
 
 class Review(models.Model):

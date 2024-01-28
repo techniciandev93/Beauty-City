@@ -3,10 +3,13 @@ from datetime import timedelta, datetime
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-import pytz
+from django.utils import timezone
 
-from .forms import ReviewTextForm
-from .models import Saloon, Service, Specialist, Review, Order, Advertising
+
+from users.models import CustomUser
+from .forms import ReviewTextForm, OrderForm
+from .models import Saloon, Service, Specialist, Review, Order
+
 from .services import monthly_payment_stats, registered_users_stats
 
 
@@ -190,19 +193,23 @@ def get_time(request):
         month = int(full_date['month'])
         date = int(full_date['date'])
 
-        selected_date = datetime(year, month + 1, date, tzinfo=pytz.utc)
+        selected_date = datetime(year, month + 1, date, tzinfo=timezone.get_current_timezone())
+
         request.session['selected_date'] = full_date
 
         specialist = Specialist.objects.get(id=request.session.get('selected_specialist'))
 
         start_work_time = selected_date.replace(hour=specialist.start_work_time.hour,
-                                                minute=specialist.start_work_time.minute, second=0, microsecond=0)
+                                                minute=specialist.start_work_time.minute, second=0, microsecond=0,
+                                                tzinfo=timezone.get_current_timezone())
         end_work_time = selected_date.replace(hour=specialist.end_work_time.hour,
-                                              minute=specialist.end_work_time.minute, second=0, microsecond=0)
+                                              minute=specialist.end_work_time.minute, second=0, microsecond=0,
+                                              tzinfo=timezone.get_current_timezone())
+
         all_time = [start_work_time + timedelta(minutes=x) for x in
                     range(0, (end_work_time - start_work_time).seconds // 60, 30)]
 
-        busy_time = [slot.astimezone(pytz.utc) + timedelta(hours=3) for slot in Order.objects.filter(
+        busy_time = [slot.astimezone(timezone.get_current_timezone()) for slot in Order.objects.filter(
             specialist=specialist, ).values_list('appointment_time', flat=True)]
         free_time = [slot for slot in all_time if slot not in busy_time]
 
@@ -229,14 +236,18 @@ def create_order(request):
         meeting_time = json.loads(request.POST.get('selected_time'))
         selected_time = meeting_time.get('time')
         request.session['selected_time'] = selected_time
-        order_num = Order.objects.last().id + 1
+        order = Order.objects.last()
+        if order:
+            order_num = order.id + 1
+        else:
+            order_num = 1
         saloon = Saloon.objects.get(id=request.session.get('selected_saloon'))
         saloon_name = saloon.name
         saloon_address = saloon.address
         service = Service.objects.get(id=request.session.get('selected_service'))
         service_name = service.name
         service_price = service.price
-        specialist = Specialist.objects.get(id=request.session.get('selected_service'))
+        specialist = Specialist.objects.get(id=request.session.get('selected_specialist'))
         specialist_name = specialist.name
         specialist_image = request.build_absolute_uri(specialist.image.url)
         date = request.session.get('selected_date')
@@ -264,3 +275,41 @@ def create_order(request):
             'BeautySaloon/serviceFinally.html',
             context=order
         )
+
+
+def place_order(request):
+    if request.method == 'POST':
+        user_details = OrderForm(request.POST)
+        if user_details.is_valid():
+            user_name = request.POST.get('fname')
+            user_phone_number = request.POST.get('tel')
+            client, created = CustomUser.objects.get_or_create(
+                phone_number=user_phone_number,
+                first_name=user_name
+            )
+            user_question = request.POST.get('contactsTextarea')
+            saloon = Saloon.objects.get(id=request.session.get('selected_saloon'))
+            service = Service.objects.get(id=request.session.get('selected_service'))
+            service_price = service.price
+            specialist = Specialist.objects.get(id=request.session.get('selected_specialist'))
+            date = request.session.get('selected_date')
+            year = int(date['year'])
+            month = int(date['month'])
+            date = int(date['date'])
+            hour, minute = request.session.get('selected_time').split(':')
+            meeting_date_time = datetime(year, month + 1, date, hour=int(hour), minute=int(minute),
+                                         )
+            new_order = Order.objects.create(
+                client=client,
+                saloon=saloon,
+                service=service,
+                specialist=specialist,
+                appointment_time=meeting_date_time,
+                end_appointment_time=meeting_date_time + timedelta(minutes=30),
+                price=service_price,
+            )
+            if user_question:
+                new_order.question = user_question
+                new_order.save()
+
+    return redirect('index')

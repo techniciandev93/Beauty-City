@@ -23,7 +23,8 @@
 						<div class="service__block">
 							<h1 class="service__title">Запись на услугу</h1>
 						</div>
-						<form action="#" class="serviceFinally__form">
+						<form action="{% url 'order_confirm' %}" method="post" class="serviceFinally__form">
+                            {% csrf_token %}
 							<div class="serviceFinally__form_block">
 								<div class="serviceFinally__form_header fic">
 									<span class="serviceFinally__form_header__number">Запись №{{ order_num }}</span>
@@ -47,7 +48,7 @@
 											<div class="serviceFinally__form_content__date">{{ meeting_date }}</div>
 										</div>
 									</div>
-									
+
 								</div>
 							</div>
 							<div class="serviceFinally__form_itesm">
@@ -57,7 +58,7 @@
 										<input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required="">
 									</div>
 								</div>
-								
+
 								<textarea name="contactsTextarea" class="contacts__form_textarea" placeholder="Вопрос(необязательно)"></textarea>
 								<div class="contacts__form_checkboxBlock fic">
 									<input type="checkbox" class="contacts__form_checkbox" checked="">
@@ -66,7 +67,7 @@
 								<button type="submit" class="serviceFinallys__form_btn">Записаться</button>
 								<button type="submit" class="serviceFinallys__form_back">Назад</button>
 							</div>
-						</form>	
+						</form>
 					</div>
 					<div class="col-md-12 col-lg-5">
 						<img src="{% static 'img/bannerImg.svg' %}" alt="bannerImg" class="banner__img">

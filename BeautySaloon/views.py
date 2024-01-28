@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from users.models import CustomUser
 from .forms import ReviewTextForm, OrderForm
-from .models import Saloon, Service, Specialist, Review, Order
+from .models import Saloon, Service, Specialist, Review, Order, Advertising
 
 from .services import monthly_payment_stats, registered_users_stats
 

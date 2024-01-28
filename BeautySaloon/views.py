@@ -87,7 +87,7 @@ def profile(request):
             'total_users_registered_this_year': total_users_registered_this_year,
             'total_users': total_users
         })
-    orders = Order.objects.prefetch_related('client', 'saloon', 'service', 'specialist').all()
+    orders = Order.objects.prefetch_related('client', 'saloon', 'service', 'specialist').filter(client=request.user)
     total_unpaid_orders = request.user.calculate_total_unpaid_orders
     return render(request, 'BeautySaloon/notes.html',
                   context={'orders': orders, 'total_unpaid_orders': total_unpaid_orders})

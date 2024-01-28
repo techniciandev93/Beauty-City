@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from users.models import CustomUser
 from .forms import ReviewTextForm, OrderForm
-from .models import Saloon, Service, Specialist, Review, Order
+from .models import Saloon, Service, Specialist, Review, Order, Advertising
 
 from .services import monthly_payment_stats, registered_users_stats
 
@@ -147,7 +147,7 @@ def get_services(request):
                 'services': services
             })
     else:
-        pass
+        return redirect('index')
 
 
 def get_masters(request):
@@ -173,6 +173,8 @@ def get_masters(request):
                 'specialists': specialists
             }
         )
+    else:
+        return redirect('index')
 
 
 def get_date(request):
@@ -183,7 +185,7 @@ def get_date(request):
             request,
             'BeautySaloon/select_date.html', )
     else:
-        pass
+        return redirect('index')
 
 
 def get_time(request):
@@ -229,6 +231,8 @@ def get_time(request):
                 'evening': evening,
             }
         )
+    else:
+        return redirect('index')
 
 
 def create_order(request):
@@ -285,8 +289,9 @@ def place_order(request):
             user_phone_number = request.POST.get('tel')
             client, created = CustomUser.objects.get_or_create(
                 phone_number=user_phone_number,
-                first_name=user_name
             )
+            client.first_name = user_name
+            client.save()
             user_question = request.POST.get('contactsTextarea')
             saloon = Saloon.objects.get(id=request.session.get('selected_saloon'))
             service = Service.objects.get(id=request.session.get('selected_service'))

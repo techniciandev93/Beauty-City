@@ -38,7 +38,7 @@
                                         <div class="accaunt__ava fic">
                                             <img src="{% static 'img/avatars/1.svg' %}" alt="avatar"
                                                  class="accaunt__ava_img">
-                                            <span class="accaunt__ava_name">Алиса И.</span>
+                                            <span class="accaunt__ava_name">{{ user.phone_number }}.</span>
                                         </div>
                                         <div class="accaunt__settings fic">
                                             <a href="#" class="accaunt__settings_intro">Изменить профиль</a>
@@ -90,7 +90,7 @@
                                 <nav>
                                     <ul class="mobMenu__menu">
                                         <li class="mobMenu__menu_item">
-                                            <a href="#" class="mobMenu__menu_link">Мастера</a>
+                                            <a href="#masters" class="mobMenu__menu_link">Мастера</a>
                                         </li>
                                         <li class="mobMenu__menu_item"><a href="#" class="mobMenu__menu_link">Услуги</a>
                                         </li>
@@ -132,7 +132,7 @@
                                 <nav>
                                     <ul class="mobMenu__menu">
                                         <li class="mobMenu__menu_item">
-                                            <a href="#" class="mobMenu__menu_link">Мастера</a>
+                                            <a href="#masters" class="mobMenu__menu_link">Мастера</a>
                                         </li>
                                         <li class="mobMenu__menu_item"><a href="#" class="mobMenu__menu_link">Услуги</a>
                                         </li>
@@ -172,10 +172,10 @@
                     <div class="col-md-5 ">
                         <nav>
                             <ul class="menu">
-                                <li class="menu__item"><a href="#" class="menu__item_link">Мастера</a></li>
-                                <li class="menu__item"><a href="#" class="menu__item_link">Услуги</a></li>
-                                <li class="menu__item"><a href="#" class="menu__item_link">Отзывы</a></li>
-                                <li class="menu__item"><a href="#" class="menu__item_link">Контакты</a></li>
+                                <li class="menu__item"><a href="#masters" class="menu__item_link">Мастера</a></li>
+                                <li class="menu__item"><a href="#services" class="menu__item_link">Услуги</a></li>
+                                <li class="menu__item"><a href="#reviews" class="menu__item_link">Отзывы</a></li>
+                                <li class="menu__item"><a href="#contacts" class="menu__item_link">Контакты</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -262,7 +262,7 @@
                     <div class="footer__bottom">
                         <div class="row">
                             <div class="col-md-4 col-lg-3">
-                                <a href="#" class="footer__link">Политика конфиденциальности</a>
+                                <a href="{% static 'pdf/Soglasie-na-obrabotku-personalnyh-dannyh.pdf' %}" target="_blank" class="footer__link">Политика конфиденциальности</a>
                             </div>
                             <div class="col-md-3">
                                 <div class="footer__copy">2022. Все права защищены</div>

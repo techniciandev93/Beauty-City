@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
+
 from users.models import CustomUser
 from .forms import ReviewTextForm, OrderForm
 from .models import Saloon, Service, Specialist, Review, Order
+
 from .services import monthly_payment_stats, registered_users_stats
 
 
@@ -58,6 +60,13 @@ def index(request):
             'reviews': reviews
         }
     )
+
+
+def advertising(request, slug):
+    advertising_instance = Advertising.objects.get(slug=slug)
+    advertising_instance.adv_counter += 1
+    advertising_instance.save()
+    return redirect('index')
 
 
 @login_required

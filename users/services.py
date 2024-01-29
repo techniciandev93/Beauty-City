@@ -15,7 +15,7 @@ def send_sms(recipient_number, message):
     response = requests.post(sms_ru_url, params=params)
     response.raise_for_status()
     sms_response = response.json()
-    if sms_response['sms_response'] == 'OK':
+    if sms_response['status'] == 'OK':
         return response.ok
     else:
         return False

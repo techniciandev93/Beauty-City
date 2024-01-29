@@ -4,11 +4,11 @@ from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-
+from django.views import View
 
 from users.models import CustomUser
-from .forms import ReviewTextForm, OrderForm
-from .models import Saloon, Service, Specialist, Review, Order, Advertising
+from .forms import ReviewTextForm, OrderForm, ConsultationRequestForm
+from .models import Saloon, Service, Specialist, Review, Order, Advertising, ConsultationRequest
 
 from .services import monthly_payment_stats, registered_users_stats
 
@@ -49,6 +49,7 @@ def index(request):
             'date': review.date
         } for review in Review.objects.all()
     ]
+    consultation_request_form = ConsultationRequestForm()
 
     return render(
         request,
@@ -57,9 +58,24 @@ def index(request):
             'saloons': saloons,
             'services': services,
             'specialists': specialists,
-            'reviews': reviews
+            'reviews': reviews,
+            'consultation_request_form': consultation_request_form
         }
     )
+
+
+class ConsultationRequestView(View):
+    template_name = 'BeautySaloon/index.html'
+
+    def post(self, request):
+        consultation_request_form = ConsultationRequestForm(request.POST)
+        if consultation_request_form.is_valid():
+            name = consultation_request_form.cleaned_data['name']
+            phone_number = consultation_request_form.cleaned_data['phone_number']
+            question = consultation_request_form.cleaned_data['question']
+            ConsultationRequest.objects.create(name=name, phone_number=phone_number, question=question)
+            return redirect('index')
+        return render(request, self.template_name, {'consultation_request_form': consultation_request_form})
 
 
 def advertising(request, slug):

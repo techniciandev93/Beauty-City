@@ -2,7 +2,8 @@ import shortuuid
 from django.contrib import admin
 from django.utils.html import format_html
 
-from BeautySaloon.models import Saloon, Service, Specialist, Review, ServiceCategory, Order, Advertising
+from BeautySaloon.models import Saloon, Service, Specialist, Review, ServiceCategory, Order, Advertising, \
+    ConsultationRequest
 
 
 @admin.register(Saloon)
@@ -53,3 +54,11 @@ class AdvertisingAdmin(admin.ModelAdmin):
         if not change:
             obj.slug = shortuuid.uuid()
         super().save_model(request, obj, form, change)
+
+
+@admin.register(ConsultationRequest)
+class ConsultationRequestAdmin(admin.ModelAdmin):
+    readonly_fields = ('date',)
+    list_display = ('name', 'phone_number', 'question', 'date')
+    search_fields = ('name', 'phone_number', 'question')
+    list_filter = ('date',)

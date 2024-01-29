@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from .views import ConsultationRequestView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -14,5 +14,5 @@ urlpatterns = [
     path('review/<int:order_id>/', views.create_review, name='review'),
     path('place_order/', views.place_order, name='order_confirm'),
     path('advertising/<slug:slug>/', views.advertising, name='advertising_detail'),
-
+    path('consultation-request/', ConsultationRequestView.as_view(), name='consultation_request'),
 ]

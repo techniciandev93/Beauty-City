@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.urls import reverse
 from django.utils.html import format_html
+from phonenumber_field.modelfields import PhoneNumberField
 
 from users.models import CustomUser
 from django.core.validators import MinValueValidator
@@ -177,6 +178,20 @@ class ServiceCategory(models.Model):
     class Meta:
         verbose_name = 'Категория сервиса'
         verbose_name_plural = 'Категории сервиса'
+
+    def __str__(self):
+        return self.name
+
+
+class ConsultationRequest(models.Model):
+    name = models.CharField(verbose_name='Имя', max_length=255)
+    phone_number = PhoneNumberField(verbose_name='Телефон')
+    question = models.TextField(verbose_name='Вопрос', blank=True, null=True, default='')
+    date = models.DateField(verbose_name='Дата', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Консультация'
+        verbose_name_plural = 'Консультации'
 
     def __str__(self):
         return self.name

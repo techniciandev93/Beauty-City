@@ -14,7 +14,11 @@ def send_sms(recipient_number, message):
     sms_ru_url = 'https://sms.ru/sms/send'
     response = requests.post(sms_ru_url, params=params)
     response.raise_for_status()
-    return response.ok
+    sms_response = response.json()
+    if sms_response['sms_response'] == 'OK':
+        return response.ok
+    else:
+        return False
 
 
 def generate_or_update_verification_code(phone_number):
@@ -26,6 +30,4 @@ def generate_or_update_verification_code(phone_number):
     if not created:
         sms_verification_code_instance.code = code
         sms_verification_code_instance.save()
-    #return send_sms(phone_number, code)
-    return True
-
+    return send_sms(phone_number, code)
